@@ -1,0 +1,76 @@
+declare
+
+id student2.std_id%type ;
+
+begin
+select std_name into id from student2 where std_id=1;
+
+
+exception
+	when value_error then
+		dbms_output.put_line('you got error');
+
+end;
+/
+
+
+
+declare
+
+id number(3)  :=10;
+
+begin
+
+	dbms_output.put_line(id/0);
+
+exception
+	when zero_divide then
+		dbms_output.put_line('you can not divide any number by zero ');
+
+end;
+/
+
+
+
+declare
+
+num1 number(3);
+num2 number(3);
+exp exception;
+
+begin
+
+	num1 :=&num1;
+	num2 :=&num2;
+	if(num1 > num2) then
+		raise exp;
+	end if;
+
+exception
+	when exp then
+		dbms_output.put_line('num1 is big');
+end;
+/
+
+
+
+1.no_data_found
+2. too_many_rows
+3. value_error
+4. zero_divide
+
+
+
+
+insert into student2
+values(1,'jigar',12,9924204996);
+
+insert into student2
+values(2,'pankaj',11,7226955187);
+
+insert into student2
+values(3,'mihir',9,7263544578);
+
+
+
+
