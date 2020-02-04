@@ -1,0 +1,17 @@
+CREATE OR REPLACE function totals
+   return integer
+   AS
+   total integer :=0;
+   begin
+   select sum(strength) into total from section;
+   return total;
+   end totals;
+ 
+   set serveroutput on;
+   declare
+   answer integer;
+   begin
+   answer :=totals();
+      dbms_output.put_line("Total strength of students is '||answer);
+end;
+/
