@@ -1,0 +1,119 @@
+create table employee
+(empid, empname, deptid, basic salary) - Enter 5 records
+
+create table department
+(deptid,deptname) - Enter 3 records
+
+create table salaryslip
+(salaryid, empid, empname, deptname, basic_salary, hra, ta,da, total_salary)
+calculate the hra, ta, da and total_salary for all records using 
+PL/SQL block according to the below conditions:
+
+	if (basic salary > 10000)
+	- hra 20%
+	- ta 10%
+	- da 25%
+
+	if (basic salary < 10000)
+	- hra 10%
+	- ta 5%
+	- da 15%
+
+
+
+
+
+
+create table employee1
+(
+empid number(3) primary key,
+empname varchar2(10),
+deptid number(3),
+basic_salary number(7)
+);
+
+
+
+
+create table department
+(
+deptid number(3) primary key,
+deptname varchar(10)
+);
+
+
+
+create table salaryslip
+(
+salaryid number(8) primary key,
+empid number(3),
+empname varchar2(10),
+deptname varchar2(6),
+b_salary number(7),
+hra number(5),
+ta number(5),
+da number(5),
+total_Salary number(8)
+);
+
+
+insert into table:-
+ 
+
+insert into employee1
+values(1,'jigar',1,90000);
+
+insert into employee1
+values(2,'sultan',2,80000);
+
+insert into employee1
+values(3,'pratham',3,70000);
+
+insert into employee1
+values(4,'kiran',4,75000);
+
+insert into employee1
+values(5,'vijay',5,50000);
+
+
+
+insert into department 
+values(1, 'mba') ;
+
+insert into department
+values(2, 'ma') ;
+
+insert into department 
+values(3, 'eng') ;
+
+
+declare
+  emp_id salaryslip.empid % type ;
+  emp_name salaryslip.empname % type ;
+  dept_name salaryslip.deptname % type ;
+  bs salaryslip.b_salary % type ;
+  h salaryslip.hra % type ;
+  t salaryslip.ta % type ;
+  d salaryslip.da % type ;
+  total salaryslip.total_salary % type ;
+  i number(3) := 1 ;
+
+ begin
+ while (i < 6) loop
+ select employee1.empid, employee1.empname, department.deptname, employee1.basic_salary into   emp_id, emp_name, dept_name, bs from employee1 inner join department on department.deptid = employee1.deptid
+   where employee1.empid = i;
+   h := (bs / 100) * 20 ;
+   t := (bs / 100) * 10 ;
+   d := (bs / 100) * 25 ;
+   if (bs < 10000) then
+   h := h / 2 ;
+   t := t / 2 ;
+   d := (bs / 100) * 15 ;
+   end if ;
+   total := bs + h + t + d ;
+   insert into salaryslip values(i, emp_id, emp_name, dept_name, bs,h,t,d, total ) ;
+ i := i + 1 ;
+ end loop ;
+ end ;
+ /
+
