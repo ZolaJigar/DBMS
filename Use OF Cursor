@@ -1,0 +1,32 @@
+create table emp1
+(
+empid number(10) primary key,
+empname varchar2(20),
+empsalary number(8)
+);
+
+insert into emp1
+values(1,'jigar',90000);
+
+insert into emp1
+values(2,'kiran',70000);
+
+insert into emp1
+values(3,'sultan',50000);
+
+
+set serveroutput on ;
+
+declare
+	data emp1%rowtype;
+	cursor fetch_data is select *from emp1;
+begin
+	open fetch_data;
+	loop
+	fetch fetch_data into data;
+	exit when fetch_data%notfound;
+      dbms_output.put_line(data.empid || ' '||data.empname ||' '||data.empsalary);
+	end loop;
+	close fetch_data;
+end;
+/
