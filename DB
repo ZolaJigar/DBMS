@@ -1,0 +1,9 @@
+declare
+id employee.emp_id % type;
+name employee.emp_name % type;
+salary employee.emp_salary % type;
+begin
+id := '&id';
+name := &name;
+salary := &salary;
+
