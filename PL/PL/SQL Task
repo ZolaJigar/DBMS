@@ -1,0 +1,162 @@
+create table employee
+(empid, empname, deptid, basic salary) - Enter 5 records
+
+create table department
+(deptid,deptname) - Enter 3 records
+
+create table salaryslip
+(salaryid, empid, empname, deptname, basic_salary, hra, ta,da, total_salary)
+calculate the hra, ta, da and total_salary for all records using 
+PL/SQL block according to the below conditions:
+
+	if (basic salary > 10000)
+	- hra 20%
+	- ta 10%
+	- da 25%
+
+	if (basic salary < 10000)
+	- hra 10%
+	- ta 5%
+	- da 15%
+
+
+
+
+
+
+
+
+SQL> create table e
+  2  (
+  3  empid number(3) primary key,
+  4  empname varchar(10),
+  5  deptid number(3),
+  6  basicsalary number(7)
+  7  );
+
+Table created.
+
+SQL> create table d (
+  2  deptid number(3) primary key,
+  3  deptname varchar(10)
+  4  );
+
+Table created.
+
+SQL> create table salaryslip (
+  2  salaryid number(3) primary key,
+  3  empid number(3),
+  4  empname varchar(10),
+  5  deptname varchar(10),
+  6  basic_salary number(7),
+  7  hra number(5),
+  8  ta number(5),
+  9  da number(5),
+ 10  total_salary number(7)
+ 11  );
+
+Table created.
+
+SQL> alter table e add constraint fk_deptid foreign key(deptid)
+  2  references d(deptid) ;
+
+Table altered.
+
+SQL> alter table salaryslip add constraint fk_empid foreign key(empid)
+  2  references e(empid) ;
+
+Table altered.
+============================================================
+SQL> insert into d values(1, 'cs') ;
+
+1 row created.
+
+SQL> insert into d values(2, 'mba') ;
+
+1 row created.
+
+SQL> insert into d values(3, 'eng') ;
+
+1 row created.
+
+SQL> insert into e values(1, 'sultan', 1, 90000) ;
+
+1 row created.
+
+SQL> insert into e values(2, 'pratham', 1, 80000) ;
+
+1 row created.
+
+SQL> insert into e values(3, 'bhavik', 2, 9000) ;
+
+1 row created.
+
+SQL> insert into e values(4, 'kiran', 3, 8000) ;
+
+1 row created.
+
+SQL> insert into e values(5, 'jigar', 1, 80000) ;
+
+1 row created.
+
+=====================================================
+
+SQL> declare
+  2  eid salaryslip.empid % type ;
+  3  ename salaryslip.empname % type ;
+  4  dname salaryslip.deptname % type ;
+  5  bs salaryslip.basic_salary % type ;
+  6  h salaryslip.hra % type ;
+  7  t salaryslip.ta % type ;
+  8  d salaryslip.da % type ;
+  9  total salaryslip.total_salary % type ;
+ 10  i number(3) := 1 ;
+ 11
+ 12  begin
+ 13  while (i < 6) loop
+ 14  select e.empid, e.empname, d.deptname, e.basicsalary into
+ 15   eid, ename, dname, bs from e inner join d on d.deptid = e.deptid
+ 16  where e.empid = i;
+ 17
+ 18  h := (bs / 100) * 20 ;
+ 19  t := (bs / 100) * 10 ;
+ 20  d := (bs / 100) * 25 ;
+ 21  if (bs < 10000) then
+ 22  h := h / 2 ;
+ 23  t := t / 2 ;
+ 24  d := (bs / 100) * 15 ;
+ 25  end if ;
+ 26  total := bs + h + t + d ;
+ 27  insert into salaryslip values(i, eid, ename, dname, bs,h,t,d, total ) ;
+ 28  i := i + 1 ;
+ 29  end loop ;
+ 30  end ;
+ 31  /
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from salaryslip ;
+
+  SALARYID      EMPID EMPNAME    DEPTNAME   BASIC_SALARY        HRA         TA
+---------- ---------- ---------- ---------- ------------ ---------- ----------
+        DA TOTAL_SALARY
+---------- ------------
+         1          1 sultan     cs                90000      18000       9000
+     22500       139500
+
+         2          2 pratham    cs                80000      16000       8000
+     20000       124000
+
+         3          3 bhavik     mba                9000        900        450
+      1350        11700
+
+
+  SALARYID      EMPID EMPNAME    DEPTNAME   BASIC_SALARY        HRA         TA
+---------- ---------- ---------- ---------- ------------ ---------- ----------
+        DA TOTAL_SALARY
+---------- ------------
+         4          4 kiran      eng                8000        800        400
+      1200        10400
+
+         5          5 jigar      cs                80000      16000       8000
+     20000       124000
