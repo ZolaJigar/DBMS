@@ -1,0 +1,32 @@
+create table simple_interest(
+p number(10,4) primary key,
+r number(10),
+n number(2),
+prn number(10,4)
+);
+
+
+insert into simple_interest
+(p,r,n)values(100,20,1);
+
+insert into simple_interest
+(p,r,n)values(200,30,1);
+
+insert into simple_interest
+(p,r,n)values(220,20,1);
+
+
+
+declare
+
+j simple_interest.p%type;
+k simple_interest.r%type;
+m simple_interest.n%type;
+n number(10,4);
+
+begin
+select p,r,n into j,k,m from simple_interest where p=220;
+n :=(j * k * m)/100;
+update simple_interest set prn=n where p=220;
+end;
+/
