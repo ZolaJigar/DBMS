@@ -1,0 +1,20 @@
+declare
+	a number;
+	b number;
+	c number;
+PROCEDURE findmin(x IN number, y IN number, z OUT number)  
+IS
+begin
+	if x < y THEN
+	   z :=x;
+	else
+	   z :=y;
+	end if;
+end;
+begin
+	a := 33;
+	b := 45;
+	findmin(a, b, c);
+	dbms_output.put_line('minimum of (33, 45): ' || c);
+end;
+/
