@@ -1,0 +1,14 @@
+Public Class Form1
+    Dim r, a, volumn, Paremeter As Double
+    Const pie = 3.14
+
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnSubmit.Click
+        r = Val(txtDiameter.Text) / 2
+        Paremeter = 2 * pie * r
+        a = pie * (r * r)
+        volumn = 4 / 3 * pie * (r * r * r)
+        MsgBox("paremeter is" & Paremeter, "Area Is" & a, "volumn is" & volumn)
+
+    End Sub
+End Class
