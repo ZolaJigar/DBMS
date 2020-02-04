@@ -1,0 +1,47 @@
+insert into student
+values(1,1,'jigar',79,52,78,121);
+
+insert into student
+values(2,2,'pratham',80,82,78,122);
+
+insert into student
+values(3,3,'sultan',78,53,43,123);
+
+insert into student
+values(4,4,'kiran',85,50,90,124);
+
+insert into student
+values(5,5,'vijay',75,40,72,125);
+
+insert into student
+values(6,6,'nikita',63,51,70,126);
+
+insert into student
+values(7,7,'twinkle',89,62,45,127);
+
+insert into student
+values(8,8,'bhavik',49,56,45,128);
+
+insert into student
+values(9,9,'aayush',59,73,56,129);
+
+insert into student
+values(10,10,'sabastain',92,45,78,130);
+
+
+
+
+declare 
+
+i number(2) :=1;
+id student.st_id%type;
+roll student.roll_no%type;
+name student.st_name%type;
+maths student.m_maths%type;
+science student.m_science%type;
+english student.m_english%type;
+code student.teacher_ code%type;
+
+begin
+	loop
+select (St_id,roll_no,st_name,m_maths,m_science,m_english,teacher_code) into (id,roll, name, maths, science , english, code)
