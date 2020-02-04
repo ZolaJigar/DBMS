@@ -1,0 +1,31 @@
+declare
+
+id student2.std_id%type ;
+
+begin
+select std_id into id from student2;
+
+
+exception
+	when too_many_rows then
+		dbms_output.put_line('more then rows');
+
+end;
+/
+
+
+declare
+
+id student2.std_id%type ;
+
+begin
+select std_ into id from student2;
+
+
+exception
+	when too_many_rows then
+		dbms_output.put_line('more then rows');
+
+end;
+/
+
