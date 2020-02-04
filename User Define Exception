@@ -1,0 +1,24 @@
+declare 
+
+id student2.std_id%type;
+exp exception;
+
+begin
+
+id :=&id;
+
+
+if(id = 0)then
+raise exp;
+select std_id into id from student2 where std_id=id;
+end if;
+
+
+exception
+	when exp then
+		dbms_output.put_line('there is no data like this');
+
+end;
+/
+
+
