@@ -1,0 +1,28 @@
+create table employee
+(
+empid number(10) primary key,
+empname varchar2(10),
+empdept varchar2(10)
+);
+
+create table department
+(
+deptid number(10),
+deptname varchar2(10)
+);
+
+
+create table salaryslip
+(
+empid number(10) references employee(empid),
+salary number(10)
+);
+
+
+create table allowances
+(
+empid number(10),
+hra number(4),
+ta number(7),
+da number(10)
+);
