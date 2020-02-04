@@ -1,0 +1,41 @@
+create table std1
+(
+id number(5) primary key,
+name varchar2(10),
+class number(3)
+);
+
+insert into std1
+values(1,'jigar',1);
+
+insert into std1
+values(2,'kiran',2);
+
+insert into std1
+values(3,'vijay',1);
+
+
+
+create or replace procedure get_list(Cl IN number)
+is
+	data std1%rowtype;
+	cursor fetch_data is select *from std1 where id=Cl;
+begin
+	open fetch_data;
+	loop
+		fetch fetch_data into data;
+		exit when fetch_data%notfound;
+		dbms_output.put_line(data.id ||' '||data.name||' '||data.class);
+	end loop;
+	close fetch_data;
+end;
+/
+
+
+
+for call:---
+
+begin
+	get_list(1);
+end;
+/
