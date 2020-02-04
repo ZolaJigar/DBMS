@@ -1,0 +1,33 @@
+
+create table emp
+(
+id number(5) primary key
+name varchar2(10),
+bsalary number(7),
+hra number(4),
+da number(4),
+ta number(4),
+total number(8)
+);
+
+
+set serveroutput on
+
+declare
+i emp.id%type;
+n emp.name%type;
+bs emp.bsalary%type;
+h emp.hra%type;
+d emp.da%type;
+t emp.ta%type;
+tsal emp.total%type;
+
+begin
+
+i :=&i;
+n :=&n;
+bs :=&bs;
+h :=(bs / 100)*20;
+d :=(bs / 100)*25;
+t :=(bs/100)*10;
+
