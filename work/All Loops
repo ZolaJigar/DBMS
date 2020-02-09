@@ -1,0 +1,97 @@
+-------Simple LOOPPP-------------------------------------------------------------
+
+declare
+	n number(2) := 1;
+begin
+	loop 
+		dbms_output.put_line (n);
+		n := n +1 ;
+		exit when n =10;
+	end loop;
+end;
+/
+
+-----WHILE LOOP--------------------------------------------------------------------------
+
+declare
+	n number(3) := 1;
+begin
+	while(n < 1000) loop
+		dbms_output.put_line (n);
+		n := n + 1;
+	end loop;
+end;
+/
+
+--program-----------
+
+create table std1
+( 
+std_id number(3) primary key,
+subject1 number(3),
+subject2 number(3),
+subject3 number(3),
+total_marks number(5),
+percentage number(5,2)
+);
+
+
+insert into std1 values(1,70,75,80, '','');
+insert into std1 values(2,78,90,72,'','');
+insert into std1 values(3,50,89,70,'','');
+insert into std1 values(4,69,90,67,'','');
+insert into std1 values(5,60,67,55,'','');
+
+
+declare
+	n number(2) := 1;
+
+	id std1.std_id%type;
+	s1 std1.subject1%type;
+	s2 std1.subject2%type;
+	s3 std1.subject3%type;
+	total std1.total_marks%type;
+	per std1.percentage%type;
+begin
+	while(n < 6) loop
+		select std_id, subject1 , subject2, subject3 into id, s1, s2, s3 from std1 where std_id = n;
+		total := (s1+ s2+ s3);
+		per := (total / 3);
+	
+		update std1 set total_marks = total where std_id = n;
+		update std1 set percentage = per where std_id = n;
+		n := n + 1 ;
+	end loop;
+end;
+/
+	
+-----add grade new column into std1------------------------------------------
+
+alter table std1 add grade varchar2(1);
+
+-----program 2--------------
+
+declare 	
+	n number(3) := 1;
+
+	p number(3) ;
+begin
+	while(n < 6) loop
+		select percentage into p from std1 where std_id = n;
+			if(p < 99 and p >= 80) THEN
+				update std1 set grade = 'a' where std_id = n;
+			elsif(p < 80 and p >= 60) THEN
+				update std1 set grade = 'b' where std_id = n;
+			elsif(p < 60 and p >= 50 ) THEN
+				update std1 set grade = 'c' where std_id = n;
+			elsif(p < 50 and p >= 33) THEN
+				update std1 set grade = 'd' where std_id = n;
+			elsif( p < 33) THEN
+				update std1 set grade = 'f' where std_id = n;
+			end if;
+			n := n + 1;
+
+	end loop;
+end;
+/
+	
