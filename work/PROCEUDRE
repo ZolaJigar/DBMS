@@ -1,0 +1,38 @@
+------PROCEUDRE---------------------------------------------------------------------------------------------------------------
+ 
+set serveroutput on;
+
+-------------------Program----------------------------------------------------------------------------------------------------
+
+create table student1
+(
+std_id number(3) primary key,
+std_name varchar2(10),
+std_class varchar2(5)
+);
+
+
+insert into student1 values(1,'jigar',11);
+insert into student1 values(2,'mahadhira',12);
+insert into student1 values(3,'janvi',10);
+insert into student1 values(4,'sultan',9);
+
+
+
+------------
+
+create or replace procedure get_list(CI IN number)
+is
+	data student1%rowtype;
+	cursor fetch_data is select * from student1 where std_id = CI ;
+begin
+	open fetch_data;
+	loop
+		fetch fetch_data into data;
+		exit when fetch_data%notfound;
+			dbms_output.put_line(data.id || '' ||data.nane ||''||data.class);
+		
+	end loop;
+	close fetch_data;
+end;
+/
