@@ -1,0 +1,100 @@
+create table student
+(
+std_rollnp number(3) primary key,
+std_name varchar2(10),
+std_class varchar2(5),
+std_city varchar2(10)
+);
+
+
+
+insert into student values(1,'jigar','10','mundra');
+insert into student values(2,'mahadhira','12','bhuj');
+insert into student values(3,'sultan','11','bhuj');
+insert into student values(4,'pratham','10','kera');
+insert into student values(5,'simran','12','kera');
+
+
+set serveroutput on;
+declare
+	id student.std_rollnp%type := 1;
+	name student.std_name%type;
+begin
+	select std_name into name from student where std_rollnp = id;
+	
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+create table employee
+( 
+empid number(3) primary key,
+empname varchar2(10), 
+empcity varchar2(15),
+empsalary number(10)
+);
+
+
+insert into employee values(1,'jigar','mundra',10000);
+insert into employee values(2,'mahadhira','bhuj',80000);
+insert into employee values(3,'manisha','gandhidham',70000);
+insert into employee values(4,'kartik','kera',50000);
+insert into employee values(5,'janvi','bhuj',40000);
+
+IF THEN STATEMENT :--------
+
+declare
+	id employee.empid%type := 1;
+	salary employee.empsalary%type;
+begin
+	select empsalary into salary from employee where empid = id ;
+	if (salary <= 50000) THEN
+		update employee set empsalary = empsalary + 1000 where empid = id;
+		dbms_output.put_line(' salary updated');
+	end if ;
+end;
+/
+
+else
+		update employee set empsalary = empsalary + 500 where empid = id;
+
+IF-THEN-ELSE STATEMENT :------------
+
+declare
+	id employee.empid%type := 1;
+	salary employee.empsalary%type;
+begin
+	select empsalary into salary from employee where empid = id;
+	if( salary >= 70000) THEN
+		update employee set empsalary = empsalary + 1000 where empid = id ;
+	else
+		update employee set empsalary = empsalary + 500 where empid = id;
+	end if ;
+	dbms_output.put_line('salary updated');
+
+end;
+/
+
+else
+		dbms_ouput.put_line(' no anything happen') ;
+
+IF-THEN-ELSIF :------------------------
+declare
+	id employee.empid%type := 3;
+	salary employee.empsalary%type;
+begin
+	select empsalary into salary from employee where empid = id;
+	if(salary < 70000) THEN
+		update employee set empsalary = empsalary + 1000 where empid = id;
+	elsif(salary = 71000) THEN
+		update employee set empsalary = empsalary + 500 where empid = id;
+	elsif(salary > 70000) THEN
+		update employee set empsalary = empsalary where empid = id ;
+
+	end if;
+end;
+/
