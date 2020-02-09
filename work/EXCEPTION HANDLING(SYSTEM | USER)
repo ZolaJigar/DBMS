@@ -1,0 +1,138 @@
+
+------EXCEPTION HANDLING IN PL/SQL----------------------------------------------------
+
+create table cust
+(
+cust_id number(3) primary key,
+cust_name varchar2(10),
+cust_city varchar2(20)
+);
+
+
+insert into cust values(1,'jigar','mundra');
+insert into cust values(2,'sultan','bhuj');
+insert into cust values(3,'pratham','kera');
+
+
+-----------------------------------------------------------------------------------------------------
+
+set serveroutput on;
+
+-----NO DATA FOUND EXCEPTION-------------------------------------------------------------------------
+declare
+
+	id cust.cust_id%type := 8;
+	name cust.cust_name%type;
+	city cust.cust_city%type;
+begin
+	select cust_name , cust_city into name, city from cust where cust_id = id;
+	dbms_output.put_line('name :'|| name );
+	dbms_output.put_line('city :' || city);
+exception
+	when no_data_found THEN
+	dbms_output.put_line('no customer like this');
+end;
+/
+
+
+
+
+---------------TOO MANY ROWS----------------------------------------------------------------------------
+
+declare
+	temp varchar(20);
+begin
+	select cust_name into temp from cust;
+	dbms_output.put_line(temp);
+EXCEPTION
+	when too_many_rows then
+		dbms_output.put_line(' trying to select too many rows');
+end;
+/
+
+
+
+----program 2-----------------------------------------------------------------------------
+
+declare 
+	c_city varchar2(30);
+begin
+	select cust_city into c_city from cust ;
+		dbms_output.put_line('cust city is :' || c_city);
+exception
+	when too_many_rows then
+		dbms_output.put_line('too many rows selected');
+end;
+/
+
+
+------------VALUE ERROR--------------------------------------------------------------------
+
+declare 
+	id cust.cust_id%type;
+begin
+	select cust_name into id from cust where cust_id = 1;
+EXCEPTION
+	when value_error then
+		dbms_output.put_line('you got something error in your program');
+end;
+/
+
+
+
+----------------ZERO DIVIDE---------------------------------------------------------------
+
+declare 
+	id number(5) := 6;
+begin
+	dbms_output.put_line(id/0);
+EXCEPTION
+	when zero_divide then
+		dbms_output.put_line('you cant divide any number by zero');
+end;
+/
+
+----------USER DEFINE EXCEPTION-----------------------------------------------------------
+
+
+declare
+	num1 number(3);
+	num2 number(3);
+	exp exception;
+begin
+	num1 := &num1;
+	num2 := &num2;
+	if(num1 > num2) then
+		raise exp;
+	end if;
+EXCEPTION	
+	when exp then
+		dbms_output.put_line('num1 is big');
+end;
+/
+
+
+
+
+
+
+------------program-2----------------------------------------------------------------------
+
+
+declare
+	id cust.cust_id%type;
+	exp exception;
+begin
+	id := &id ;
+
+	if(id = 0) THEN
+		raise exp;
+		select cust_id into id from cust where cust_id = id;
+	end if ;
+
+
+EXCEPTION	
+	when exp then
+		dbms_output.put_line('there is no data like this');
+end;
+/
