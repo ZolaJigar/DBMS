@@ -1,0 +1,37 @@
+---------USE OF CURSOR IN PL/SQL----------------------------------------------------------
+
+
+set serveroutput on;
+
+-------Program--------------
+
+create table emp 
+(
+empid number(3) primary key,
+empname varchar2(10),
+empsalary number(7)
+);
+
+
+insert into emp values(1,'jigar',50000);
+insert into emp values(2,'mahadhira',60000);
+insert into emp values(3,'janvi',70000);
+insert into emp values(4,'gargi',67000);
+insert into emp values(5,'sultan',78000);
+
+
+
+-----------------
+declare
+	data emp%rowtype;
+	cursor fetch_data is select *from emp;
+begin
+	open fetch_data;
+	loop
+		fetch fetch_data into data;
+		exit when fetch_data%notfound;
+			dbms_output.put_line(data.empid || ' '||data.empname ||' '||data.empsalary );
+	end loop;
+	close fetch_data;
+end;
+/
